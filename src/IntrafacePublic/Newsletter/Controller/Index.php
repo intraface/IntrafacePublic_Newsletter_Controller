@@ -5,7 +5,7 @@ class IntrafacePublic_Newsletter_Controller_Index extends k_Controller
 {
     private $form;
 
-    function getForm()
+    private function getForm()
     {
         if ($this->form) {
             return $this->form;
@@ -21,7 +21,7 @@ class IntrafacePublic_Newsletter_Controller_Index extends k_Controller
         return $this->form;
     }
 
-    function POST()
+    public function POST()
     {
         if ($this->getForm()->validate()) {
             $client = $this->registry->get('newsletter');
@@ -44,10 +44,10 @@ class IntrafacePublic_Newsletter_Controller_Index extends k_Controller
         }
     }
 
-    function GET()
+    public function GET()
     {
         return '<h1>' . $this->__('Newsletter') . '</h1>
-            <p>' . $this->__('Info will follow. Should be pulled directly from intraface.dk.') . '</p>
+            <p>' . $this->__('Information about the newsletter.') . '</p>
             ' . $this->getForm()->toHTML();
     }
 }
