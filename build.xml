@@ -5,7 +5,7 @@
     <taskdef classname="phing.tasks.ext.IlibPearDeployerTask" name="peardeploy" />
 
     <property name="package-name" value="${phing.project.name}" />
-    <property name="version" value="0.1.1" />
+    <property name="version" value="0.1.2" />
     <property name="stability" value="alpha" />
 
     <target name="export">
@@ -17,11 +17,11 @@
     <target name="build" depends="export">
         <d51pearpkg2 dir="./build" baseinstalldir="/">
             <name>${package-name}</name>
-            <summary>Controller for the shop</summary>
+            <summary>Controller for the newsletter</summary>
             <channel>public.intraface.dk</channel>
             <description>
                 <!--        Don't exceed this width         -->
-                Brilliant controller for the shop.
+                Brilliant controller for the newsletter.
             </description>
 
             <lead user="lsolesen" name="Lars Olesen" email="lars@legestue.net" />
@@ -48,7 +48,7 @@
             </dependencies>
 
             <notes>
-                * First version as a PEAR package
+                * Changed text for the info about the newsletter.
             </notes>
         </d51pearpkg2>
     </target>
