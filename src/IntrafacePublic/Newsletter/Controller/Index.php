@@ -26,13 +26,15 @@ class IntrafacePublic_Newsletter_Controller_Index extends k_Controller
         if ($this->getForm()->validate()) {
             $client = $this->registry->get('newsletter');
             if ($this->POST['mode'] == 1) {
-                if ($client->subscribe(14, $this->POST['email'], get_ip_address(''))) {
+                // @todo need to be changed to a list id from elsewhere
+                if ($client->subscribe(1, $this->POST['email'], get_ip_address(''))) {
                     $msg = '<p class="notice">' . $this->__('You have now subscribed to the newsletter.') . '</p>';
                 } else {
                     $msg = '<p class="alert">' . $this->__('An error occured. You could not subscribe.') . '</p>';
                 }
             } elseif ($this->POST['mode'] == 2) {
-                if ($client->unsubscribe(14, $this->POST['email'], get_ip_address())) {
+                // @todo need to be changed to a list id from elsewhere
+                if ($client->unsubscribe(1, $this->POST['email'], get_ip_address())) {
                     $msg = '<p class="notice">' . $this->__('You have unsubscribed from the newsletter.') . '</p>';
                 } else {
                     $msg = '<p class="alert">' . $this->__('An error occured. You could not be removed from the newsletter.') . '</p>';
