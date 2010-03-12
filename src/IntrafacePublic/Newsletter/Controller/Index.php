@@ -21,7 +21,12 @@ class IntrafacePublic_Newsletter_Controller_Index extends k_Controller
                     $data['message'] = 'An error occured. You could not subscribe.';
                 }
             } elseif ($this->POST['mode'] == 2) {
-                if ($client->unsubscribe($this->POST['email'], get_ip_address(''))) {
+                if(!empty($this->POST['comment'])) {
+                    $comment = $this->POST['comment'];
+                } else {
+                    $comment = '';
+                }
+                if ($client->unsubscribe($this->POST['email'], $comment)) {
                     $data = array();
                     $data['message'] = 'You have unsubscribed from the newsletter.';
                 } else {

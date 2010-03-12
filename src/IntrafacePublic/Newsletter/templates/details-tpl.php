@@ -26,8 +26,7 @@
     
     <div class="row">
         <label for="unsubscribe"><?php e(__('Unsubscribe')); ?></label>
-        <input value="2" id="unsubscribe" type="radio" name="mode" />
-    </div>
+        <input value="2" id="unsubscribe" type="radio" name="mode" /> Please leave a note: <input type="text" name="comment" value="" /></div>
     
 </fieldset>
 <div>
