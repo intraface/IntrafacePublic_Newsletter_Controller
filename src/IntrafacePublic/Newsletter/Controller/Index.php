@@ -1,32 +1,46 @@
 <?php
 require_once 'get_ip_address.php';
 
-class IntrafacePublic_Newsletter_Controller_Index extends k_Controller
+class IntrafacePublic_Newsletter_Controller_Index extends k_Component
 {
-    public function POST()
-    {
-        $this->document->title = $this->__('Newsletter');
+    protected $template;
 
-        $data = $this->POST->getArrayCopy();
-        if (!Validate::email($this->POST['email'])) {
+    function __construct(k_TemplateFactory $template)
+    {
+        $this->template = $template;
+    }
+
+    public function renderHtml()
+    {
+        $this->document->setTitle('Newsletter');
+
+        $data = array();
+        $tpl = $this->template->create('IntrafacePublic/Newsletter/templates/details');
+        return $tpl->render($this, $data);
+    }
+
+    public function postForm()
+    {
+        $data = $this->body();
+        if (!Validate::email($this->body('email'))) {
             $data['message'] = 'An error occured. E-mail is not valid.';
         } else {
             $client = $this->registry->get('newsletter');
 
-            if ($this->POST['mode'] == 1) {
-                if ($client->subscribe($this->POST['email'], $this->POST['name'], get_ip_address(''))) {
+            if ($this->body('mode') == 1) {
+                if ($client->subscribe($this->body('email'), $this->body('name'), get_ip_address(''))) {
                     $data = array();
                     $data['message'] = 'You have now subscribed to the newsletter.';
                 } else {
                     $data['message'] = 'An error occured. You could not subscribe.';
                 }
-            } elseif ($this->POST['mode'] == 2) {
-                if(!empty($this->POST['comment'])) {
-                    $comment = $this->POST['comment'];
+            } elseif ($this->body('mode') == 2) {
+                if(!empty($this->body('comment'))) {
+                    $comment = $this->body('comment');
                 } else {
                     $comment = '';
                 }
-                if ($client->unsubscribe($this->POST['email'], $comment)) {
+                if ($client->unsubscribe($this->body('email'), $comment)) {
                     $data = array();
                     $data['message'] = 'You have unsubscribed from the newsletter.';
                 } else {
@@ -35,19 +49,6 @@ class IntrafacePublic_Newsletter_Controller_Index extends k_Controller
             }
         }
 
-        return $this->render('IntrafacePublic/Newsletter/templates/details-tpl.php', $data);
+        return $this->render();
     }
-
-    public function GET()
-    {
-        $this->document->title = $this->__('Newsletter');
-
-        $data = array();
-        return $this->render('IntrafacePublic/Newsletter/templates/details-tpl.php', $data);
-
-        return '<h1>' . $this->__('Newsletter') . '</h1>
-            <p>' . $this->__('Information about the newsletter.') . '</p>
-            ' . $this->getForm()->toHTML();
-    }
-
 }
